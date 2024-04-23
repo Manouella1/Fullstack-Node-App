@@ -1,0 +1,152 @@
+CREATE DATABASE game_store;
+
+
+use game_store;
+
+CREATE TABLE publishers(
+    publisherId INT NOT NULL AUTO_INCREMENT,
+    pubName VARCHAR(50),
+    PRIMARY KEY (publisherId)
+);
+
+INSERT INTO publishers (pubName) VALUES ('Playstation');
+INSERT INTO publishers (pubName) VALUES ('xbox');
+INSERT INTO publishers (pubName) VALUES ('Nintendo');
+INSERT INTO publishers (pubName) VALUES ('Steam');
+
+SELECT * FROM publishers;
+
+CREATE TABLE products(
+    productId INT NOT NULL AUTO_INCREMENT,
+    pubPro INT,
+    productSerial VARCHAR(50) UNIQUE,
+    productName VARCHAR(50),
+    productImage VARCHAR(100),
+    productStock INT,
+    productPrice INT NOT NULL,
+    productCategory VARCHAR(50),
+    PRIMARY KEY (productId),
+    FOREIGN KEY (pubPro) REFERENCES publishers(publisherId)
+);
+
+-- Om man vill ta bort specifiik produkt
+-- DELETE FROM products WHERE productId = 2;
+
+INSERT INTO products (pubPro, productName, productPrice, productCategory, productSerial,  productStock) VALUES (1, 'Crash Bandicot', 300, 'Arcade','US1234-5', 3000);
+INSERT INTO products (pubPro, productName, productPrice, productCategory, productSerial, productStock) VALUES (2, 'Halo', 200, 'FPS','US2345-6', 3), (1, 'Gran turismo', 250, 'simulator', 'JPN1234-5', 3);
+
+CREATE VIEW productView AS
+SELECT publishers.pubName, products.productName, products.productStock FROM publishers
+INNER JOIN products ON publishers.publisherId = products.pubPro;
+
+SELECT * FROM productView;
+
+
+CREATE TABLE customers(
+    customerId INT NOT NULL AUTO_INCREMENT,
+    customerName VARCHAR(50),
+    customerMail VARCHAR(50),
+    customerAdress VARCHAR(50),
+
+    PRIMARY KEY (customerId)
+);
+
+INSERT INTO customers (customerName, customerMail, customerAdress) VALUES ('Pedram', 'pedram@iths.se', 'biskopsgården');
+INSERT INTO customers (customerName, customerMail, customerAdress) VALUES ('Mano', 'mano@iths.se', 'torslanda'), ('Emnet', 'emnet@iths.se', 'gbg');
+
+CREATE TABLE cart(
+    cartId INT NOT NULL AUTO_INCREMENT,
+    coupon VARCHAR(50),
+    deliveryOption VARCHAR(50),
+    shippingAdress VARCHAR(50),
+    PRIMARY KEY (cartId)
+);
+
+INSERT INTO cart (coupon, deliveryOption, shippingAdress) VALUES ('ghj123','DHL', 'DHL service point');
+INSERT INTO cart (coupon, deliveryOption, shippingAdress) VALUES ('hjsk999','DHL', 'DHL service point');
+
+SELECT * FROM cart;
+
+CREATE TABLE orders(
+    orderId INT NOT NULL AUTO_INCREMENT,
+    productOrder INT,
+    orderNumber VARCHAR(50),
+    orderQuantity INT,
+    customerOrder INT,
+    cartOrder INT,
+    PRIMARY KEY (orderId),
+    FOREIGN KEY (productOrder) REFERENCES products(productId),
+    FOREIGN KEY (customerOrder) REFERENCES customers(customerId),
+    FOREIGN KEY (cartOrder) REFERENCES cart(cartId)
+);
+
+
+-- Dessa rader skapar första ordern
+INSERT INTO orders (productOrder, orderNumber,  customerOrder, cartOrder,  orderQuantity) VALUES (1, 'order1', 1, 1, 2);
+INSERT INTO orders (productOrder, orderNumber, customerOrder, cartOrder,  orderQuantity) VALUES (2, 'order1', 1, 1, 2);
+
+-- Här skapar vi andra ordern
+INSERT INTO orders (productOrder, orderNumber, customerOrder, cartOrder,  orderQuantity) VALUES (2, 'order2', 2, 2, 3);
+
+-- Här skapas tredje ordern
+INSERT INTO orders (productOrder, orderNumber, customerOrder, cartOrder,  orderQuantity) VALUES (3, 'order4', 2, 2, 2);
+-- one more
+INSERT INTO orders (productOrder, orderNumber, customerOrder, cartOrder,  orderQuantity) VALUES (3, 'order4', 2, 2, 1);
+
+
+
+SELECT * FROM orders;
+SELECT * FROM products;
+
+
+CREATE VIEW OrderView AS
+SELECT products.productName, customers.customerName, cart.shippingAdress, orders.orderNumber, products.productSerial, orders.orderQuantity FROM products
+INNER JOIN orders ON products.productId = orders.productOrder
+INNER JOIN customers ON orders.customerOrder = customers.customerId
+INNER JOIN cart ON orders.cartOrder = cart.cartId;
+
+SELECT * FROM OrderView;
+
+SELECT COUNT(orderId) AS countCartItem
+FROM orders
+INNER JOIN cart ON orders.cartOrder = cart.cartId
+WHERE orders.orderNumber = 'order1';
+
+-- Stored procedure som håller koll på lagersaldo
+
+
+
+DELIMITER $$
+CREATE TRIGGER stockUpdate
+    AFTER INSERT ON orders
+     FOR EACH ROW
+        BEGIN
+            IF EXISTS (SELECT * FROM products WHERE productStock > NEW.orderQuantity) THEN
+
+-- uppdatera produktlager - så många som är köpta i en order.
+-- productId = productOrder eftersom productId är FK i order tabellen
+       UPDATE products SET productStock = productStock - NEW.orderQuantity WHERE productId = NEW.productOrder;
+        ELSE
+            -- Kasta ett fel om det inte finns tillräckligt lager
+            SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Insufficient stock available';
+END IF;
+
+END $$
+
+DELIMITER //
+CREATE TRIGGER emptyStock
+    BEFORE INSERT ON orders
+    FOR EACH ROW
+    BEGIN
+        IF EXISTS (SELECT * FROM products WHERE productStock < NEW.orderQuantity) THEN
+            SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Not in stock';
+        END IF ;
+    END //
+
+
+-- För eventuell korrigering
+DROP TRIGGER emptyStock;
+DROP TRIGGER stockUpdate;
+DROP DATABASE game_store;
