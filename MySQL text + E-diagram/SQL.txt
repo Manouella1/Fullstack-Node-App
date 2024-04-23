@@ -54,16 +54,34 @@ CREATE TABLE customers(
 INSERT INTO customers (customerName, customerMail, customerAdress) VALUES ('Pedram', 'pedram@iths.se', 'biskopsgården');
 INSERT INTO customers (customerName, customerMail, customerAdress) VALUES ('Mano', 'mano@iths.se', 'torslanda'), ('Emnet', 'emnet@iths.se', 'gbg');
 
+
+-- tillåter NULL i foreign key kolumnen om en kundvagn inte har en aktiv kupong.
+
+CREATE TABLE coupons (
+    couponId INT AUTO_INCREMENT PRIMARY KEY,
+    code VARCHAR(50) UNIQUE,
+    discount INT,
+    expirationDate DATE,
+    isActive BOOLEAN
+);
+
+INSERT INTO coupons (code, discount, expirationDate, isActive) VALUES ('sommar20', 20, '2024-06-01', true);
+
+SELECT * FROM coupons;
+
 CREATE TABLE cart(
     cartId INT NOT NULL AUTO_INCREMENT,
-    coupon VARCHAR(50),
     deliveryOption VARCHAR(50),
     shippingAdress VARCHAR(50),
+    couponId INT NULL,
+FOREIGN KEY (couponId) REFERENCES coupons(couponId),
     PRIMARY KEY (cartId)
 );
 
-INSERT INTO cart (coupon, deliveryOption, shippingAdress) VALUES ('ghj123','DHL', 'DHL service point');
-INSERT INTO cart (coupon, deliveryOption, shippingAdress) VALUES ('hjsk999','DHL', 'DHL service point');
+INSERT INTO cart (deliveryOption, shippingAdress) VALUES ('DHL', 'DHL service point');
+INSERT INTO cart (deliveryOption, shippingAdress) VALUES ('DHL', 'DHL service point');
+INSERT INTO cart (deliveryOption, shippingAdress, couponId) VALUES ('DHL', 'DHL service point', 1);
+
 
 SELECT * FROM cart;
 
@@ -112,10 +130,7 @@ FROM orders
 INNER JOIN cart ON orders.cartOrder = cart.cartId
 WHERE orders.orderNumber = 'order1';
 
--- Stored procedure som håller koll på lagersaldo
-
-
-
+-- Trigger som håller koll på lagersaldo (productStock)
 DELIMITER $$
 CREATE TRIGGER stockUpdate
     AFTER INSERT ON orders
@@ -134,6 +149,7 @@ END IF;
 
 END $$
 
+-- Trigger som inte hindrar order att genomföras om lagersaldo är 0
 DELIMITER //
 CREATE TRIGGER emptyStock
     BEFORE INSERT ON orders
