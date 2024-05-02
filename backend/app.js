@@ -15,8 +15,15 @@ const newsRouter = require("./routes/newsRouter");
 app.use(spelRouter);
 app.use(newsRouter);
 
-const mongoDBConnection = require("./mongoDBConnection");
-mongoDBConnection();
+const customerRouter = require("./routes/customerRouter");
+app.use(customerRouter);
+
+app.get("/", (req, res) => {
+  console.log("you've entered our index page");
+  res.send("Hello World!");
+  const mongoDBConnection = require("./mongoDBConnection");
+  mongoDBConnection();
+});
 
 app.get("/hello", (req, res) => {
   console.log("you've entered our index page");
