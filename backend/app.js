@@ -21,9 +21,10 @@ app.use(customerRouter);
 app.get("/", (req, res) => {
   console.log("you've entered our index page");
   res.send("Hello World!");
-  const mongoDBConnection = require("./mongoDBConnection");
-  mongoDBConnection();
 });
+
+const mongoDBConnection = require("./mongoDBConnection");
+mongoDBConnection();
 
 app.get("/hello", (req, res) => {
   console.log("you've entered our index page");
