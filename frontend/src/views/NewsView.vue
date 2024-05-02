@@ -5,7 +5,9 @@ export default {
       var: [],
     };
   },
-  created() {},
+  created() {
+    fetch("https://localhost:3000/news").then().then();
+  },
 
   methods: {
     function1() {},
@@ -18,4 +20,4 @@ export default {
   <h1>The latest news</h1>
 </template>
 
-<script></script>
+<style></style>
