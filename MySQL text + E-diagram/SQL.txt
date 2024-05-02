@@ -31,34 +31,36 @@ CREATE TABLE products(
     FOREIGN KEY (pubPro) REFERENCES publishers(publisherId)
 );
 
+-- drop table products;
+
 -- Om man vill ta bort specifiik produkt
 -- DELETE FROM products WHERE productId = 2;
 
 INSERT INTO products(pubPro, productSerial, productName, productImage, productStock, productPrice, productCategory)
-VALUES (1, 'US12345-1', 'Crash Twinsanity', 'url', 3000, 299, 'Platformer'),
-       (1, 'US12345-2', 'Contra: Shattered Soldier', 'url', 5, 399, 'Arcade Shooter'),
-       (1, 'US12345-3', 'Transformers', 'url', 100, 399, 'Shooter'),
-       (1, 'US12345-4', 'Final Fantasy X', 'url', 300, 199, 'RPG'),
-       (1, 'JPN12345-1', 'Berserk Millennium Falcon Arc: Seimasenki no Sho', 'url', 5, 699, 'Hack & Slash'),
-       (1, 'US12345-5', 'I-Ninja', 'url', 400, 299, 'Puzzle, Platformer' ),
-       (2, 'US12345-6', 'Phantom Dust', 'url', 10, 499,'Action, Cards' ),
-       (2, 'US12345-7', 'Panzer Dragoon Orta', 'url', 30, 399, 'Arcade, Rail shooter'),
-       (2, 'US12345-8', 'Otogi: Myth of Demons', 'url', 150, 299, 'Hack & Slash' ),
-       (2, 'US12345-9', 'Halo 2', 'url', 500, 299, 'FPS, Shooter'),
-       (2, 'US23456-1', 'Jade Empire', 'url', 200, 399, 'Action RPG'),
-       (2, 'JPN12345-2', 'Jet Set Radio Future', 'url', 100, 399, 'Platformer, Extreme sports'),
-       (3, 'US23456-2', 'Super Smash Bros: Melee', 'url', 500, 599, 'Fighting' ),
-       (3, 'US23456-3', 'Metroid Prime', 'url', 300, 499, 'Metroidvania, Shooter'),
-       (3, 'JPN12345-3', 'Tales of Symphonia', 'url', 200, 299, 'Action RPG'),
-       (3, 'US23456-4', 'Eternal Darkness: Sanity''s Requiem', 'url', 400, 399, 'Puzzle, Survival, Horror'),
-       (3, 'US23456-5', 'SoulCalibur II', 'url', 300, 399, 'Fighting'),
-       (3, 'US23456-6', 'Ikaruga', 'url', 200, 299, 'Shoot em up'),
-       (4, 'US23456-7', 'WarCraft III: Reign of Chaos', 'url', 1000000, 199, 'Real-time strategy'),
-       (4, 'US23456-8', 'Age of Mythology', 'url', 1000000, 199, 'Real-time strategy'),
-       (4, 'US23456-9', 'The Orange Box', 'url', 1000000, 199, 'FPS, Shooter, Platformer'),
-       (4, 'US34567-1', 'BioShock', 'url', 1000000, 99, 'FPS'),
-       (4, 'US34567-2', 'Day of the Tentacle', 'ulr', 1000000, 99, 'Point & Click, Adventure, Puzzle'),
-       (4, 'US34567-3', 'System Shock 2', 'url', 1000000, 99, 'FPS, Stealth, RPG');
+VALUES (1, 'US12345-1', 'Crash Twinsanity', '/src/assets/covers/1.png', 3000, 299, 'Platformer'),
+       (1, 'US12345-2', 'Contra: Shattered Soldier', '/src/assets/covers/2.png', 5, 399, 'Arcade Shooter'),
+       (1, 'US12345-3', 'Transformers', '/src/assets/covers/3.png', 100, 399, 'Shooter'),
+       (1, 'US12345-4', 'Final Fantasy X', '/src/assets/covers/4.png', 300, 199, 'RPG'),
+       (1, 'JPN12345-1', 'Berserk Millennium Falcon Arc: Seimasenki no Sho', '/src/assets/covers/5.png', 5, 699, 'Hack & Slash'),
+       (1, 'US12345-5', 'I-Ninja', '/src/assets/covers/6.png', 400, 299, 'Puzzle, Platformer' ),
+       (2, 'US12345-6', 'Phantom Dust', '/src/assets/covers/7.png', 10, 499,'Action, Cards' ),
+       (2, 'US12345-7', 'Panzer Dragoon Orta', '/src/assets/covers/8.png', 30, 399, 'Arcade, Rail shooter'),
+       (2, 'US12345-8', 'Otogi: Myth of Demons', '/src/assets/covers/9.png', 150, 299, 'Hack & Slash' ),
+       (2, 'US12345-9', 'Halo 2', '/src/assets/covers/10.png', 500, 299, 'FPS, Shooter'),
+       (2, 'US23456-1', 'Jade Empire', '/src/assets/covers/11.png', 200, 399, 'Action RPG'),
+       (2, 'JPN12345-2', 'Jet Set Radio Future', '/src/assets/covers/12.png', 100, 399, 'Platformer, Extreme sports'),
+       (3, 'US23456-2', 'Super Smash Bros: Melee', '/src/assets/covers/13.png', 500, 599, 'Fighting' ),
+       (3, 'US23456-3', 'Metroid Prime', '/src/assets/covers/14.png', 300, 499, 'Metroidvania, Shooter'),
+       (3, 'JPN12345-3', 'Tales of Symphonia', '/src/assets/covers/15.png', 200, 299, 'Action RPG'),
+       (3, 'US23456-4', 'Eternal Darkness: Sanity''s Requiem', '/src/assets/covers/16.png', 400, 399, 'Puzzle, Survival, Horror'),
+       (3, 'US23456-5', 'SoulCalibur II', '/src/assets/covers/17.png', 300, 399, 'Fighting'),
+       (3, 'US23456-6', 'Ikaruga', '/src/assets/covers/18.png', 200, 299, 'Shoot em up'),
+       (4, 'US23456-7', 'WarCraft III: Reign of Chaos', '/src/assets/covers/19.png', 1000000, 199, 'Real-time strategy'),
+       (4, 'US23456-8', 'Age of Mythology', '/src/assets/covers/20.png', 1000000, 199, 'Real-time strategy'),
+       (4, 'US23456-9', 'The Orange Box', '/src/assets/covers/21.png', 1000000, 199, 'FPS, Shooter, Platformer'),
+       (4, 'US34567-1', 'BioShock', '/src/assets/covers/22.png', 1000000, 99, 'FPS'),
+       (4, 'US34567-2', 'Day of the Tentacle', '/src/assets/covers/23.png', 1000000, 99, 'Point & Click, Adventure, Puzzle'),
+       (4, 'US34567-3', 'System Shock 2', '/src/assets/covers/24.png', 1000000, 99, 'FPS, Stealth, RPG');
 
 CREATE VIEW productView AS
 SELECT publishers.pubName, products.productName, products.productStock FROM publishers
@@ -176,7 +178,7 @@ END IF;
 
 END $$
 
--- Trigger som inte hindrar order att genomföras om lagersaldo är 0
+-- Trigger som hindrar order att genomföras om lagersaldo är 0
 DELIMITER //
 CREATE TRIGGER emptyStock
     BEFORE INSERT ON orders

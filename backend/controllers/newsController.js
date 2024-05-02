@@ -96,13 +96,26 @@ exports.delNews = async (req, res) => {
 };
 
 exports.findArticleById = async (req, res) => {
-  const { id } = req.body;
+  const { id } = req.params;
   try {
     const oneArticle = await newsModel.findById(id);
+    return res.status(200).json(oneArticle);
   } catch (error) {
     res.status(500).json({
       success: false,
       error: "Could not retrieve article by id",
+    });
+  }
+};
+
+exports.deleteArticleById = async (req, res) => {
+  try {
+    const { id } = req.body;
+    const deleteById = await newsModel.findByIdAndDelete(id);
+    return res.status(200).json(deleteById);
+  } catch (error) {
+    return res.status(500).json({
+      error: error.message,
     });
   }
 };
