@@ -15,11 +15,13 @@ const newsSchema = new mongoose.Schema({
     required: true,
   },
   date: {
-    type: date,
+    type: Date,
     required: true,
+    default: Date.now,
   },
   tags: {
     type: Array,
+    required: true,
   },
 });
 

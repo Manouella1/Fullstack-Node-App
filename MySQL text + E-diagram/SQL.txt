@@ -1,7 +1,6 @@
 CREATE DATABASE game_store;
 
-
-use game_store;
+USE game_store;
 
 CREATE TABLE publishers(
     publisherId INT NOT NULL AUTO_INCREMENT,
@@ -13,6 +12,9 @@ INSERT INTO publishers (pubName) VALUES ('Playstation');
 INSERT INTO publishers (pubName) VALUES ('xbox');
 INSERT INTO publishers (pubName) VALUES ('Nintendo');
 INSERT INTO publishers (pubName) VALUES ('Steam');
+INSERT INTO publishers (pubName) VALUES ('Epic Game Store');
+INSERT INTO publishers (pubName) VALUES ('GOG');
+INSERT INTO publishers (pubName) VALUES ('IOS/Android');
 
 SELECT * FROM publishers;
 
@@ -32,14 +34,39 @@ CREATE TABLE products(
 -- Om man vill ta bort specifiik produkt
 -- DELETE FROM products WHERE productId = 2;
 
-INSERT INTO products (pubPro, productName, productPrice, productCategory, productSerial,  productStock) VALUES (1, 'Crash Bandicot', 300, 'Arcade','US1234-5', 3000);
-INSERT INTO products (pubPro, productName, productPrice, productCategory, productSerial, productStock) VALUES (2, 'Halo', 200, 'FPS','US2345-6', 3), (1, 'Gran turismo', 250, 'simulator', 'JPN1234-5', 3);
+INSERT INTO products(pubPro, productSerial, productName, productImage, productStock, productPrice, productCategory)
+VALUES (1, 'US12345-1', 'Crash Twinsanity', 'url', 3000, 299, 'Platformer'),
+       (1, 'US12345-2', 'Contra: Shattered Soldier', 'url', 5, 399, 'Arcade Shooter'),
+       (1, 'US12345-3', 'Transformers', 'url', 100, 399, 'Shooter'),
+       (1, 'US12345-4', 'Final Fantasy X', 'url', 300, 199, 'RPG'),
+       (1, 'JPN12345-1', 'Berserk Millennium Falcon Arc: Seimasenki no Sho', 'url', 5, 699, 'Hack & Slash'),
+       (1, 'US12345-5', 'I-Ninja', 'url', 400, 299, 'Puzzle, Platformer' ),
+       (2, 'US12345-6', 'Phantom Dust', 'url', 10, 499,'Action, Cards' ),
+       (2, 'US12345-7', 'Panzer Dragoon Orta', 'url', 30, 399, 'Arcade, Rail shooter'),
+       (2, 'US12345-8', 'Otogi: Myth of Demons', 'url', 150, 299, 'Hack & Slash' ),
+       (2, 'US12345-9', 'Halo 2', 'url', 500, 299, 'FPS, Shooter'),
+       (2, 'US23456-1', 'Jade Empire', 'url', 200, 399, 'Action RPG'),
+       (2, 'JPN12345-2', 'Jet Set Radio Future', 'url', 100, 399, 'Platformer, Extreme sports'),
+       (3, 'US23456-2', 'Super Smash Bros: Melee', 'url', 500, 599, 'Fighting' ),
+       (3, 'US23456-3', 'Metroid Prime', 'url', 300, 499, 'Metroidvania, Shooter'),
+       (3, 'JPN12345-3', 'Tales of Symphonia', 'url', 200, 299, 'Action RPG'),
+       (3, 'US23456-4', 'Eternal Darkness: Sanity''s Requiem', 'url', 400, 399, 'Puzzle, Survival, Horror'),
+       (3, 'US23456-5', 'SoulCalibur II', 'url', 300, 399, 'Fighting'),
+       (3, 'US23456-6', 'Ikaruga', 'url', 200, 299, 'Shoot em up'),
+       (4, 'US23456-7', 'WarCraft III: Reign of Chaos', 'url', 1000000, 199, 'Real-time strategy'),
+       (4, 'US23456-8', 'Age of Mythology', 'url', 1000000, 199, 'Real-time strategy'),
+       (4, 'US23456-9', 'The Orange Box', 'url', 1000000, 199, 'FPS, Shooter, Platformer'),
+       (4, 'US34567-1', 'BioShock', 'url', 1000000, 99, 'FPS'),
+       (4, 'US34567-2', 'Day of the Tentacle', 'ulr', 1000000, 99, 'Point & Click, Adventure, Puzzle'),
+       (4, 'US34567-3', 'System Shock 2', 'url', 1000000, 99, 'FPS, Stealth, RPG');
 
 CREATE VIEW productView AS
 SELECT publishers.pubName, products.productName, products.productStock FROM publishers
 INNER JOIN products ON publishers.publisherId = products.pubPro;
 
 SELECT * FROM productView;
+
+SELECT * FROM products;
 
 
 CREATE TABLE customers(
