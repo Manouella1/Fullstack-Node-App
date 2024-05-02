@@ -13,8 +13,12 @@ app.use(express.static("../frontend/public"));
 const spelRouter = require("./routes/spelRouter");
 app.use(spelRouter);
 
+const customerRouter = require("./routes/customerRouter");
+app.use(customerRouter);
+
 app.get("/", (req, res) => {
-  res.send(console.log("you've entered our index page"));
+  console.log("you've entered our index page");
+  res.send("Hello World!");
 });
 
 app.listen(port, () => {
