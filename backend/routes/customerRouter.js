@@ -9,7 +9,7 @@ router.get("/api/customers/:id", customerController.getCustomerById);
 
 router.post("/api/customers", customerController.postCustomer);
 
-router.put("/api/customers", customerController.putCustomer);
+router.patch("/api/customers", customerController.patchCustomer);
 
 router.delete("/api/customers/", customerController.deleteCustomer);
 

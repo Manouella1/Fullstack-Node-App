@@ -70,8 +70,8 @@ exports.postCustomer = async (req, res) => {
   }
 };
 
-// PUT *********
-exports.putCustomer = async (req, res) => {
+// PATCH *********
+exports.patchCustomer = async (req, res) => {
   const {
     customerName,
     customerMail,
