@@ -47,9 +47,11 @@ CREATE TABLE customers(
     customerName VARCHAR(50),
     customerMail VARCHAR(50),
     customerAdress VARCHAR(50),
-
+    customerPassword VARCHAR(50) NULL,
     PRIMARY KEY (customerId)
 );
+
+SELECT * FROM customers;
 
 INSERT INTO customers (customerName, customerMail, customerAdress) VALUES ('Pedram', 'pedram@iths.se', 'biskopsgården');
 INSERT INTO customers (customerName, customerMail, customerAdress) VALUES ('Mano', 'mano@iths.se', 'torslanda'), ('Emnet', 'emnet@iths.se', 'gbg');
@@ -73,14 +75,12 @@ CREATE TABLE cart(
     cartId INT NOT NULL AUTO_INCREMENT,
     deliveryOption VARCHAR(50),
     shippingAdress VARCHAR(50),
-    couponId INT NULL,
-FOREIGN KEY (couponId) REFERENCES coupons(couponId),
     PRIMARY KEY (cartId)
 );
 
 INSERT INTO cart (deliveryOption, shippingAdress) VALUES ('DHL', 'DHL service point');
 INSERT INTO cart (deliveryOption, shippingAdress) VALUES ('DHL', 'DHL service point');
-INSERT INTO cart (deliveryOption, shippingAdress, couponId) VALUES ('DHL', 'DHL service point', 1);
+INSERT INTO cart (deliveryOption, shippingAdress) VALUES ('DHL', 'DHL service point');
 
 
 SELECT * FROM cart;
@@ -92,16 +92,20 @@ CREATE TABLE orders(
     orderQuantity INT,
     customerOrder INT,
     cartOrder INT,
+    couponId INT NULL,
     PRIMARY KEY (orderId),
     FOREIGN KEY (productOrder) REFERENCES products(productId),
     FOREIGN KEY (customerOrder) REFERENCES customers(customerId),
-    FOREIGN KEY (cartOrder) REFERENCES cart(cartId)
+    FOREIGN KEY (cartOrder) REFERENCES cart(cartId),
+    FOREIGN KEY (couponId) REFERENCES coupons(couponId)
 );
 
 
 -- Dessa rader skapar första ordern
 INSERT INTO orders (productOrder, orderNumber,  customerOrder, cartOrder,  orderQuantity) VALUES (1, 'order1', 1, 1, 2);
 INSERT INTO orders (productOrder, orderNumber, customerOrder, cartOrder,  orderQuantity) VALUES (2, 'order1', 1, 1, 2);
+INSERT INTO orders (productOrder, orderNumber, customerOrder, cartOrder,  orderQuantity) VALUES (2, 'order1', 1, 1, 2);
+INSERT INTO orders (productOrder, orderNumber, customerOrder, cartOrder,  orderQuantity, couponId) VALUES (2, 'order1', 1, 1, 2, 1);
 
 -- Här skapar vi andra ordern
 INSERT INTO orders (productOrder, orderNumber, customerOrder, cartOrder,  orderQuantity) VALUES (2, 'order2', 2, 2, 3);
@@ -118,10 +122,11 @@ SELECT * FROM products;
 
 
 CREATE VIEW OrderView AS
-SELECT products.productName, customers.customerName, cart.shippingAdress, orders.orderNumber, products.productSerial, orders.orderQuantity FROM products
+SELECT products.productName, customers.customerName, cart.shippingAdress, orders.couponId, orders.orderNumber, products.productSerial, orders.orderQuantity FROM products
 INNER JOIN orders ON products.productId = orders.productOrder
 INNER JOIN customers ON orders.customerOrder = customers.customerId
 INNER JOIN cart ON orders.cartOrder = cart.cartId;
+
 
 SELECT * FROM OrderView;
 
