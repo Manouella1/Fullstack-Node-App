@@ -92,10 +92,10 @@ exports.putCustomer = async (req, res) => {
   ];
 
   // Om man inte skrivit in sitt namn ?
-  if (!username || customerName.trim().length < 1) {
+  if (!customerName || customerName.trim().length < 1) {
     return res.status(400).json({
       success: false,
-      error: "Du har inte skrivit in något username för användaren",
+      error: "Du har inte skrivit in något namn för användaren",
     });
   }
 
@@ -130,7 +130,7 @@ exports.deleteCustomer = async (req, res) => {
   const { customerId } = req.body;
 
   // Vi använder Prepared Statements genom ? i SQL-koden och att ange paramatern i query-funktionen
-  let sql = "DELETE FROM customer WHERE customerId = ?";
+  let sql = "DELETE FROM customers WHERE customerId = ?";
 
   if (!customerId) {
     return res.status(400).json({
