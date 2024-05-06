@@ -12,8 +12,10 @@ app.use(cors());
 
 const spelRouter = require("./routes/spelRouter");
 const newsRouter = require("./routes/newsRouter");
+const orderRouter = require("./routes/orderRouter");
 app.use(spelRouter);
 app.use(newsRouter);
+app.use(orderRouter);
 
 const customerRouter = require("./routes/customerRouter");
 app.use(customerRouter);

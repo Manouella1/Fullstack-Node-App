@@ -104,7 +104,7 @@ export default {
         </p>
       </form>
     </div>
-    <div class="marginal">
+    <div id="window">
       <p id="output"></p>
       <ul>
         <li></li>
@@ -120,6 +120,28 @@ export default {
   align-items: center;
 }
 .marginal {
+  background-color: rgb(51, 49, 49);
+  border-radius: 20px;
+  margin-top: 50px;
+  border: inset 3px green;
+  width: 250px;
+  height: 350px;
+}
+
+#window {
+  background-color: rgb(51, 49, 49);
+  border-radius: 20px;
+  margin-top: 50px;
+  border: inset 3px green;
+  width: 250px;
+  height: 350px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   margin-top: 50px;
 }
 </style>
