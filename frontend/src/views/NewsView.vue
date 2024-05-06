@@ -28,27 +28,40 @@ export default {
 
 <template>
   <h1 style="text-align: center">The latest news and blogs from our users</h1>
-
   <article
     class="articleDisp"
     v-for="(article, index) in articles"
     :key="index"
   >
-    <h2>{{ article.title }}</h2>
-    <h3>{{ article.author }}</h3>
-    <p>{{ article.text }}</p>
+    <h2 style="font-weight: bold">{{ article.title }}</h2>
+    <span class="name_date">
+      <p>By: {{ article.author }}</p>
+      <p>At: {{ article.date }}</p>
+    </span>
+    <h3 style="width: 500px">{{ article.text }}</h3>
     <p>Tags: {{ article.tags.join(" ,") }}</p>
-    <p>{{ article.date }}</p>
+    <hr
+      style="
+        color: green;
+        width: 550px;
+        height: 5px;
+        background-color: green;
+        margin-top: 15px;
+      "
+    />
   </article>
-
-  <section></section>
 </template>
 
 <style>
 .articleDisp {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   margin: 50px;
+}
+
+.name_date {
+  display: flex;
+  gap: 10px;
 }
 </style>

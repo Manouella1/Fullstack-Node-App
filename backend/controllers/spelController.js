@@ -1,6 +1,7 @@
 const connectionMySQL = require("../connectionMySQL");
 
 // Hämta våra spel
+
 exports.getGames = async (req, res) => {
   let sql = "SELECT * FROM products";
   try {
@@ -16,6 +17,22 @@ exports.getGames = async (req, res) => {
     });
   }
 };
+
+// exports.getGames = async (req, res) => {
+//   let sql = "SELECT * FROM OrderView";
+//   try {
+//     await connectionMySQL.query(sql, (error, results, fields) => {
+//       if (error) {
+//         throw error;
+//       }
+//       res.status(200).json(results);
+//     });
+//   } catch (error) {
+//     return res.status(500).json({
+//       error: error.message,
+//     });
+//   }
+// };
 
 // Hämta ett spel
 exports.getGame = async (req, res) => {
