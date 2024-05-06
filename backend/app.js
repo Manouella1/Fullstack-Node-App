@@ -18,6 +18,11 @@ app.use(newsRouter);
 const customerRouter = require("./routes/customerRouter");
 app.use(customerRouter);
 
+const cartsRouter = require("./routes/cartsRouter")
+const reviewRouter = require("./routes/reviewRouter");
+app.use(cartsRouter)
+app.use(reviewRouter)
+
 app.get("/", (req, res) => {
   console.log("you've entered our index page");
   res.send("Hello World!");

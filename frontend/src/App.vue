@@ -14,14 +14,20 @@ import HelloWorld from "./components/HelloWorld.vue";
     /> -->
 
     <div class="wrapper">
-      <HelloWorld msg="Hello and welcome to the game store !" />
+      <HelloWorld msg="Hello and welcome to GameStore!" />
 
       <nav>
+        <div class="nav-links">
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/games">Games</RouterLink>
         <RouterLink to="/news">News</RouterLink>
         <RouterLink to="/games/suggestions">Game suggestion</RouterLink>
         <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/reviews">Reviews</RouterLink>
+        </div>
+        <div>
+          <RouterLink to="/carts"><i class="fa-solid fa-cart-shopping" style="color: #a8aaad;"></i></RouterLink>
+        </div>
       </nav>
     </div>
   </header>
@@ -40,7 +46,19 @@ header {
   margin: 0 auto 2rem; */
 }
 
+.nav-links {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin-left: 20px;
+}
+
 nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
   font-size: 12px;
   text-align: center;
