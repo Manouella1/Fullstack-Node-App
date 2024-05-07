@@ -13,6 +13,7 @@ const newsSchema = new mongoose.Schema({
   text: {
     type: String,
     required: true,
+    maxlength: 1000,
   },
   date: {
     type: Date,

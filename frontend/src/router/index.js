@@ -2,10 +2,14 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import Games from "../views/GamesView.vue";
 import PostGamesView from "@/views/PostGamesView.vue";
-import NewsViews from "../views/NewsView.vue";
+import NewsView from "../views/NewsView.vue";
 import ReviewsView from "../views/ReviewsView.vue";
 import CartView from "../views/CartView.vue";
+<<<<<<< HEAD
 import LoginView from "../views/LoginView.vue";
+=======
+import orderView from "@/views/orderView.vue";
+>>>>>>> 8c00608f78638cb7c0f309fe9e180bc9eef2571b
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -41,7 +45,12 @@ const router = createRouter({
     {
       path: "/news",
       name: "news",
-      component: NewsViews,
+      component: NewsView,
+    },
+    {
+      path: "/orders",
+      name: "orders",
+      component: orderView,
     },
     {
       path: "/reviews",

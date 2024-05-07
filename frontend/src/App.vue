@@ -1,6 +1,13 @@
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
 import HelloWorld from "./components/HelloWorld.vue";
+import cart from "./components/cart.vue";
+// import { ref, onMounted } from "vue";
+
+// onMounted(() => {
+//   const dialog = document.querySelector("dialog");
+//   dialog.close();
+// });
 </script>
 
 <template>
@@ -16,12 +23,15 @@ import HelloWorld from "./components/HelloWorld.vue";
     <div class="wrapper">
       <HelloWorld msg="Hello and welcome to GameStore!" />
 
+      <cart />
+
       <nav>
         <div class="nav-links">
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/games">Games</RouterLink>
         <RouterLink to="/news">News</RouterLink>
+        <RouterLink to="/games">Games</RouterLink>
         <RouterLink to="/games/suggestions">Game suggestion</RouterLink>
+        <RouterLink to="/orders">Orders & Stock</RouterLink>
         <RouterLink to="/about">About</RouterLink>
         <RouterLink to="/reviews">Reviews</RouterLink>
         </div>
@@ -36,6 +46,11 @@ import HelloWorld from "./components/HelloWorld.vue";
 </template>
 
 <style scoped>
+#app {
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
 header {
   line-height: 1.5;
   max-height: 100vh;

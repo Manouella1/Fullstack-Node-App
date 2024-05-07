@@ -10,7 +10,7 @@ router.get("/games/:id", spelControl.getGame);
 // Lägg till nytt spel
 router.post("/games/suggestions", spelControl.postGame);
 // Ändra ett spel
-router.put("/games", spelControl.putGame);
+router.put("/games/edit", spelControl.putGame);
 // Radera ett spel
 router.delete("/games", spelControl.delGame);
 

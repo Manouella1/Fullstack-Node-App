@@ -47,12 +47,13 @@ exports.postNews = async (req, res) => {
     return res.status(200).json(insertNews);
   } catch (error) {
     return res.status(500).json({
-      error: "error.message",
+      error: error.message,
     });
   }
 };
 
 exports.putNews = async (req, res) => {
+  const { id } = req.params;
   const {
     newsTitle,
     newsAuthor,
@@ -65,7 +66,7 @@ exports.putNews = async (req, res) => {
 
   try {
     await newsModel.updateOne(
-      { title: newsTitle },
+      { _id: id },
       {
         title: newsTitle,
         author: newsAuthor,
@@ -95,7 +96,7 @@ exports.delNews = async (req, res) => {
   }
 };
 
-exports.findArticleById = async (req, res) => {
+exports.getById = async (req, res) => {
   const { id } = req.params;
   try {
     const oneArticle = await newsModel.findById(id);
