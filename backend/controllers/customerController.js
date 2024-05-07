@@ -37,9 +37,9 @@ exports.getCustomerById = async (req, res) => {
   }
 };
 
-// POST ********
+// POST: REGISTER *************
 
-exports.postCustomer = async (req, res) => {
+exports.registerCustomer = async (req, res) => {
   const { customerName, customerMail, customerAdress, customerPassword } =
     req.body;
 
@@ -90,14 +90,6 @@ exports.patchCustomer = async (req, res) => {
     customerPassword,
     customerId,
   ];
-
-  // Om man inte skrivit in sitt namn ?
-  if (!customerName || customerName.trim().length < 1) {
-    return res.status(400).json({
-      success: false,
-      error: "Du har inte skrivit in något namn för användaren",
-    });
-  }
 
   // Om man inte skrivit in ID vid PUT
   if (!customerId) {
