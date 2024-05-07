@@ -1,0 +1,88 @@
+use mongoDB_game_store
+
+db.reviews.insertMany([
+  {
+    username: '@Mihawk',
+    title: 'Amazing stuff',
+    text: 'The product quality is beyond my expectations, definitely worth the price!',
+    stars: 5,
+    date: new Date('2024-04-29')
+  },
+  {
+    username: '@Kisame',
+    title: 'Not worth the hype',
+    text: 'I was expecting better quality given the reviews.',
+    stars: 2,
+    date: new Date('2024-04-28')
+  },
+  {
+    username: '@Morales',
+    title: 'Satisfied',
+    text: 'Great service, fast turnaround, fast shipping.',
+    stars: 5,
+    date: new Date('2024-04-27')
+  },
+  {
+    username: 'Kane',
+    title: 'Poor Service',
+    text: 'The game is fine, but the service was disappointing.',
+    stars: 1,
+    date: new Date('2024-04-26')
+  },
+  {
+    username: 'Chillin',
+    title: 'Average',
+    text: 'Nothing special, but it works as advertised.',
+    stars: 3,
+    date: new Date('2024-04-24')
+  },
+  {
+    username: '@Royalflush',
+    title: 'Highly Recommend',
+    text: 'Great service, great deals!',
+    stars: 5,
+    date: new Date('2024-04-25')
+  },
+  {
+    username: '@Moon-',
+    title: 'Great for the Price',
+    text: 'Surprisingly good quality for the price, quite happy.',
+    stars: 4,
+    date: new Date('2024-04-23')
+  },
+  {
+    username: 'Outlaw',
+    title: 'Visit an IRL store instead',
+    text: 'They take awhile to mail most orders, you cant also 100% trust a games condition unless its new.',
+    stars: 1,
+    date: new Date('2024-04-22')
+  },
+  {
+    username: 'Gothamsknight',
+    title: 'GameStore doesn’t care',
+    text: 'GameStore does nothing if your shipment does not arrive.',
+    stars: 1,
+    date: new Date('2024-04-21')
+  },
+  
+ {
+  "username": "@GamerGuru",
+  "title": "Hidden Gems Galore!",
+  "text": " The selection of vintage games is outstanding, and the prices are reasonable.",
+  "stars": 4,
+  "date": new Date('2024-05-01')
+ }
+]);
+
+ db.reviews.find()
+
+db.reviews.updateOne(
+   { username: "@Kisame" }, 
+   { $set: { stars: 3 } }
+);
+
+
+db.reviews.deleteOne(
+{ username: '@Royalflush' }
+);
+

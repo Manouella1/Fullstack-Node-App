@@ -8,13 +8,14 @@ export default {
 
   created() {
     this.returnedItems = JSON.parse(localStorage.getItem("addedItem"));
-    console.log(this.returnedItems);
   },
 
   methods: {
     showCart() {
       const dialog = document.querySelector("dialog");
       const cart = document.getElementById("cart");
+      console.log(this.returnedItems);
+
       cart.addEventListener("click", () => {
         dialog.showModal();
       });
@@ -29,7 +30,7 @@ export default {
     },
 
     clearCart() {
-      localStorage.clear();
+      localStorage.removeItem("addedItem");
       this.returnedItems = [];
       console.log("cart cleared!");
     },
@@ -46,8 +47,10 @@ export default {
     @click="showCart()"
   />
 
-  <dialog>
-    <p>Empty</p>
+  <dialog style="margin: auto">
+    <div v-for="(items, index) in returnedItems" :key="index">
+      <p>{{ items.prodName }}</p>
+    </div>
     <div
       style="
         display: flex;
