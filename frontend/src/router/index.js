@@ -5,6 +5,7 @@ import PostGamesView from "@/views/PostGamesView.vue";
 import NewsViews from "../views/NewsView.vue";
 import ReviewsView from "../views/ReviewsView.vue";
 import CartView from "../views/CartView.vue";
+import LoginView from "../views/LoginView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -13,6 +14,11 @@ const router = createRouter({
       path: "/",
       name: "home",
       component: HomeView,
+    },
+    {
+      path: "/login",
+      name: "login",
+      component: Login,
     },
     {
       path: "/about",
@@ -40,12 +46,12 @@ const router = createRouter({
     {
       path: "/reviews",
       name: "reviews",
-      component: ReviewsView
+      component: ReviewsView,
     },
     {
       path: "/carts",
       name: "carts",
-      component: CartView
+      component: CartView,
     },
   ],
 });
