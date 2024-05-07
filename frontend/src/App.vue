@@ -1,6 +1,7 @@
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
 import HelloWorld from "./components/HelloWorld.vue";
+import FooterComponent from './views/FooterComponent.vue';
 </script>
 
 <template>
@@ -33,6 +34,7 @@ import HelloWorld from "./components/HelloWorld.vue";
   </header>
 
   <RouterView />
+  <FooterComponent />
 </template>
 
 <style scoped>
