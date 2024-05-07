@@ -3,18 +3,14 @@ const router = express.Router();
 const newsController = require("../controllers/newsController");
 
 // hämta alla nyheter
-router.get("/news", newsController.getNews);
-// hämta en nyhet
-router.get("/news/:title", newsController.getNew);
+router.get("/api/news", newsController.getNews);
 // hämta via _id
-router.get("/news-id/:id", newsController.findArticleById);
+router.get("/api/news/:id", newsController.getById);
 // skicka in nyhet/blog
-router.post("/news", newsController.postNews);
+router.post("/api/news", newsController.postNews);
 // redigera nyhet
-router.put("/news", newsController.putNews);
-//  radera nyhet
-router.delete("/news-delbytitle", newsController.delNews);
+router.put("/api/news/:id", newsController.putNews);
 // radera nyhet via _id
-router.delete("/news-deleId", newsController.deleteArticleById);
+router.delete("/api/news/:id", newsController.deleteArticleById);
 
 module.exports = router;

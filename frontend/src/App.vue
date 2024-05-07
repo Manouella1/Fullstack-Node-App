@@ -1,7 +1,10 @@
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
 import HelloWorld from "./components/HelloWorld.vue";
+
 import FooterComponent from './views/FooterComponent.vue';
+
+
 </script>
 
 <template>
@@ -17,12 +20,15 @@ import FooterComponent from './views/FooterComponent.vue';
     <div class="wrapper">
       <HelloWorld msg="Hello and welcome to GameStore!" />
 
+      <cart />
+
       <nav>
         <div class="nav-links">
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/games">Games</RouterLink>
         <RouterLink to="/news">News</RouterLink>
+        <RouterLink to="/games">Games</RouterLink>
         <RouterLink to="/games/suggestions">Game suggestion</RouterLink>
+        <RouterLink to="/orders">Orders & Stock</RouterLink>
         <RouterLink to="/about">About</RouterLink>
         <RouterLink to="/reviews">Reviews</RouterLink>
         </div>
@@ -38,6 +44,11 @@ import FooterComponent from './views/FooterComponent.vue';
 </template>
 
 <style scoped>
+#app {
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
 header {
   line-height: 1.5;
   max-height: 100vh;
