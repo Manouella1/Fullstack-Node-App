@@ -51,7 +51,7 @@ const updateCustomer = () => {
   }
   axios
     .patch(
-      `/api/customers/${updateCustomerData.value.customerId}`,
+      `http://localhost:3000/api/customers/${updateCustomerData.value.customerId}`,
       updateCustomerData.value
     )
     .then((response) => {

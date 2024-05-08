@@ -120,7 +120,7 @@ exports.patchCustomer = async (req, res) => {
 // // // DELETE ********
 exports.deleteCustomer = async (req, res) => {
   // const { customerId } = req.body;
-  const { customerId } = req.params.id;
+  const customerId = req.params.id;
 
   // Vi använder Prepared Statements genom ? i SQL-koden och att ange paramatern i query-funktionen
   let sql = "DELETE FROM customers WHERE customerId = ?";

@@ -29,6 +29,8 @@ import FooterComponent from "./views/FooterComponent.vue";
           <RouterLink to="/orders">Orders & Stock</RouterLink>
           <RouterLink to="/about">About</RouterLink>
           <RouterLink to="/reviews">Reviews</RouterLink>
+          <RouterLink to="/login">Login</RouterLink>
+          <RouterLink to="/customers">customers</RouterLink>
         </div>
         <div>
           <RouterLink to="/carts"
