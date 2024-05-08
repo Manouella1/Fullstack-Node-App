@@ -16,6 +16,7 @@ exports.getAdmin = async (req, res) => {
 exports.registerAdmin = async (req, res) => {
   try {
     const { adminName, adminPassword } = req.body;
+    console.log(adminName, adminPassword);
     const hashedPassword = await bcrypt.hash(adminPassword, 10);
     const newAdmin = new adminModel({
       adminName,

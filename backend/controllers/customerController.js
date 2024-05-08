@@ -72,13 +72,11 @@ exports.registerCustomer = async (req, res) => {
 
 // PATCH *********
 exports.patchCustomer = async (req, res) => {
-  const {
-    customerName,
-    customerMail,
-    customerAdress,
-    customerPassword,
-    customerId,
-  } = req.body;
+  console.log("hej");
+  const { customerName, customerMail, customerAdress, customerPassword } =
+    req.body;
+
+  const { id } = req.params;
 
   // Använder Prepared Statements genom ? i SQL-koden och att ange paramatern i query-funktionen
   let sql =
@@ -88,11 +86,11 @@ exports.patchCustomer = async (req, res) => {
     customerMail,
     customerAdress,
     customerPassword,
-    customerId,
+    id,
   ];
 
   // Om man inte skrivit in ID vid PUT
-  if (!customerId) {
+  if (!id) {
     return res.status(400).json({
       success: false,
       error: "Du har inte skrivit in något ID för användaren du ska uppdatera!",
