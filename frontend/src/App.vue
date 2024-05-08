@@ -1,13 +1,10 @@
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
 import HelloWorld from "./components/HelloWorld.vue";
-import cart from "./components/cart.vue";
-// import { ref, onMounted } from "vue";
 
-// onMounted(() => {
-//   const dialog = document.querySelector("dialog");
-//   dialog.close();
-// });
+import FooterComponent from './views/FooterComponent.vue';
+
+
 </script>
 
 <template>
@@ -43,6 +40,7 @@ import cart from "./components/cart.vue";
   </header>
 
   <RouterView />
+  <FooterComponent />
 </template>
 
 <style scoped>
