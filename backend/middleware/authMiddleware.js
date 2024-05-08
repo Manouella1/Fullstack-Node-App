@@ -1,14 +1,15 @@
-const express = require("express");
-const router = express.Router();
-const verifyToken = require("../middleware/authMiddleware");
+const jwt = require("jsonwebtoken");
 
-const adminController = require("../controllers/adminController");
+function verifyToken(req, res, next) {
+  const token = req.header("Authorization");
+  if (!token) return res.status(401).json({ error: "Access denied" });
+  try {
+    const decoded = jwt.verify(token, "your-secret-key");
+    req.adminId = decoded.adminId;
+    next();
+  } catch (error) {
+    res.status(401).json({ error: "Invalid token" });
+  }
+}
 
-// Protected routes
-router.get("/", verifyToken, (req, res) => {
-  res.status(200).json({ message: "Protected route accessed" });
-});
-
-// router.post("/books", verifyToken, adminController.postCustomer);
-
-module.exports = router;
+module.exports = verifyToken;

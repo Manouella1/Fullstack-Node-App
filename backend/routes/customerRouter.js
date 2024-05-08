@@ -11,6 +11,6 @@ router.post("/customer/register", customerController.registerCustomer);
 
 router.patch("/api/customers", customerController.patchCustomer);
 
-router.delete("/api/customers/", customerController.deleteCustomer);
+router.delete("/api/customers/:id", customerController.deleteCustomer);
 
 module.exports = router;

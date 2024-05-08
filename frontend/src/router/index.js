@@ -5,7 +5,11 @@ import PostGamesView from "@/views/PostGamesView.vue";
 import NewsView from "../views/NewsView.vue";
 import ReviewsView from "../views/ReviewsView.vue";
 import CartView from "../views/CartView.vue";
+<<<<<<< HEAD
+import Customers from "../views/CustomerView.vue";
+=======
 // import LoginView from "../views/LoginView.vue";
+>>>>>>> e84cd9ef69a096ea72d92b03fbb5f4446cc86d98
 import orderView from "@/views/orderView.vue";
 
 const router = createRouter({
@@ -16,11 +20,19 @@ const router = createRouter({
       name: "home",
       component: HomeView,
     },
+<<<<<<< HEAD
+    {
+      path: "/customers",
+      name: "customers",
+      component: Customers,
+    },
+=======
     // {
     //   path: "/login",
     //   name: "login",
     //   component: Login,
     // },
+>>>>>>> e84cd9ef69a096ea72d92b03fbb5f4446cc86d98
     {
       path: "/about",
       name: "about",
