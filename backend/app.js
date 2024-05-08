@@ -17,13 +17,22 @@ app.use(spelRouter);
 app.use(newsRouter);
 app.use(orderRouter);
 
-const customerRouter = require("./routes/customerRouter");
-app.use(customerRouter);
-
 const cartsRouter = require("./routes/cartsRouter");
 const reviewRouter = require("./routes/reviewRouter");
 app.use(cartsRouter);
 app.use(reviewRouter);
+
+// customer och admin routes
+const customerRouter = require("./routes/customerRouter");
+app.use(customerRouter);
+
+const adminRoutes = require("./routes/adminRouter");
+app.use(adminRoutes);
+
+const protectedRoutes = require("./routes/protectedRoutes");
+app.use(protectedRoutes);
+
+// app.use(express.static("../frontend"));
 
 app.get("/", (req, res) => {
   console.log("you've entered our index page");

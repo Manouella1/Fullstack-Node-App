@@ -9,15 +9,15 @@ const adminSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  date: {
-    type: Date,
-    required: true,
-    default: Date.now,
-  },
-  role: {
-    type: number,
-    required: true,
-  },
+  // date: {
+  //   type: Date,
+  //   required: true,
+  //   default: Date.now,
+  // },
+  // role: {
+  //   type: Number,
+  //   required: false,
+  // },
 });
 
 module.exports = mongoose.model("admin", adminSchema);

@@ -5,7 +5,7 @@ import PostGamesView from "@/views/PostGamesView.vue";
 import NewsView from "../views/NewsView.vue";
 import ReviewsView from "../views/ReviewsView.vue";
 import CartView from "../views/CartView.vue";
-import LoginView from "../views/LoginView.vue";
+import Customers from "../views/CustomerView.vue";
 import orderView from "@/views/orderView.vue";
 
 const router = createRouter({
@@ -17,9 +17,9 @@ const router = createRouter({
       component: HomeView,
     },
     {
-      path: "/login",
-      name: "login",
-      component: Login,
+      path: "/customers",
+      name: "customers",
+      component: Customers,
     },
     {
       path: "/about",
