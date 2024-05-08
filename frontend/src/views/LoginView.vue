@@ -157,10 +157,10 @@ const navigateToRegister = () => {
   background: #2d2f36;
 }
 body {
-  background: white;
   font-family: "Inter UI", sans-serif;
   margin: 0;
   padding: 20px;
+  border-radius: 10%;
 }
 
 a {
@@ -171,7 +171,7 @@ p {
   margin-left: 7em;
 }
 .page {
-  background: #e2e2e5;
+  /* background: #e2e2e5; */
   display: flex;
   flex-direction: column;
   height: calc(100% - 40px);
