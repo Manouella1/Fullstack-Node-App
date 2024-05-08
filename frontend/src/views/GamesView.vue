@@ -43,7 +43,7 @@ export default {
 
     fetchGames() {
       const fetched = [];
-      fetch("http://localhost:3000/games")
+      fetch("http://localhost:3000/api/games")
         .then((resp) => resp.json())
         .then((res) => {
           for (let i = 0; i < res.length; i++) {
@@ -78,7 +78,7 @@ export default {
 </script>
 
 <template>
-  <button @click="clearCart()">clear cart</button>
+  <!-- <button @click="clearCart()">clear cart</button> -->
   <img class="banner" src="../assets/misc/11.png" alt="banner 1" />
   <h1 class="center">Games for sale !</h1>
   <ul>

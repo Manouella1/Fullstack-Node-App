@@ -3,13 +3,22 @@ export default {
   data() {
     return {
       pubPro: null,
+      putpubPro: null,
       productName: "",
+      putproductName: "",
       productImage: "/src/assets/covers/default.png",
       productPrice: null,
+      putproductPrice: null,
       productCategory: "",
+      putproductCategory: "",
+      productStock: null,
+      productSerial: null,
       productId: null,
+      putproductId: null,
+      delproductId: null,
       newContainer: [],
       gamesContain: [],
+      key: 0,
     };
   },
 
@@ -18,15 +27,16 @@ export default {
   },
 
   methods: {
-    formSubmit() {
+    formSubmit(e) {
+      e.preventDefault();
       // console.log("form submitted!");
-      fetch("http://localhost:3000/games/suggestions", {
+      fetch("http://localhost:3000/api/games/insert", {
         body: JSON.stringify({
           pubPro: this.pubPro,
-          productSerial: null,
+          productSerial: this.productSerial,
           productName: this.productName,
           productImage: this.productImage,
-          productStock: null,
+          productStock: this.productStock,
           productPrice: this.productPrice,
           productCategory: this.productCategory,
         }),
@@ -37,21 +47,29 @@ export default {
         .then((response) => response.json())
         .then((result) => {
           console.log(result);
+          this.pubPro = null;
+          this.productSerial = null;
+          this.productName = null;
+          this.productImage = null;
+          this.productStock = null;
+          this.productPrice = null;
+          this.productCategory = null;
         });
     },
 
-    putSubmit() {
+    putSubmit(e) {
+      e.preventDefault();
       // console.log("form submitted!");
-      fetch("http://localhost:3000/games/edit", {
+      fetch("http://localhost:3000/api/games/edit", {
         body: JSON.stringify({
-          pubPro: this.pubPro,
+          pubPro: this.putpubPro,
           productSerial: null,
-          productName: this.productName,
+          productName: this.putproductName,
           productImage: this.productImage,
           productStock: null,
-          productPrice: this.productPrice,
-          productCategory: this.productCategory,
-          productId: this.productId
+          productPrice: this.putproductPrice,
+          productCategory: this.putproductCategory,
+          productId: this.putproductId,
         }),
 
         headers: { "Content-type": "application/json" },
@@ -60,12 +78,35 @@ export default {
         .then((response) => response.json())
         .then((result) => {
           console.log(result);
+          this.putproductName = null;
+          this.putproductPrice = null;
+          this.putproductCategory = null;
+          this.putproductId = null;
+          this.putpubPro = null;
+        });
+    },
+
+    delSubmit(e) {
+      e.preventDefault();
+      // console.log("form submitted!");
+      fetch("http://localhost:3000/api/games/remove", {
+        body: JSON.stringify({
+          productId: this.delproductId,
+        }),
+
+        headers: { "Content-type": "application/json" },
+        method: "DELETE",
+      })
+        .then((response) => response.json())
+        .then((result) => {
+          console.log(result);
+          this.delproductId = null;
         });
     },
 
     getGames() {
       const containGames = [];
-      fetch("http://localhost:3000/games")
+      fetch("http://localhost:3000/api/games")
         .then((resp) => resp.json())
         .then((results) => {
           results.forEach((result) => {
@@ -80,21 +121,39 @@ export default {
 </script>
 
 <template>
-  <h1>
+  <h1 style="text-align: center; margin: 10px">
     Couldn't find your game ? Is something missing ? Send us a suggestion !
   </h1>
-  <!-- <div id="buttons">
-    <button>POST</button>
-    <button>PUT</button>
-    <button>DELETE</button>
-  </div> -->
+
+  <table @mouseenter="getGames()" class="tablePlacement">
+    <div class="tableHeight">
+      <thead>
+        <tr>
+          <th>Product ID</th>
+          <th>Product Name</th>
+          <th>Product Price</th>
+          <th>Product Genre</th>
+          <th>Product Serial</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(games, index) in gamesContain" :key="index">
+          <td>{{ games.productId }}</td>
+          <td>{{ games.productName }}</td>
+          <td>{{ games.productPrice }}</td>
+          <td>{{ games.productCategory }}</td>
+          <td>{{ games.productSerial }}</td>
+        </tr>
+      </tbody>
+    </div>
+  </table>
 
   <section id="divide2">
     <!-- POST -->
     <div class="marginal">
       <!-- pubPro, dvs vilken publisher som är kopplat med foreign key -->
       <form
-        action="http://localhost:3000/games/suggestions"
+        action="http://localhost:3000/api/games/insert"
         @submit.prevent="formSubmit"
         method="post"
         id="gameForm"
@@ -132,32 +191,38 @@ export default {
           <option value="6">GOG</option>
           <option value="7">IOS/Android</option>
         </select>
-        <p>
-          <input type="submit" value="Send" />
-        </p>
+        <button style="margin-top: 50px" onclick="formSubmit()">Send</button>
       </form>
     </div>
     <!-- PUT -->
     <div class="marginal">
       <form
-        action="http://localhost:3000/games/edit"
+        action="hhttp://localhost:3000/games/edit"
         @submit.prevent="putSubmit"
         method="put"
         id="gameForm"
       >
         <h1>PUT</h1>
+        <p>Game id</p>
+        <input
+          type="text"
+          name="gameId"
+          id="gameId"
+          placeholder="product ID..."
+          v-model="putproductId"
+        />
         <p>Game Title:</p>
         <input
           type="text"
           id="gameTitle"
-          v-model="productName"
+          v-model="putproductName"
           placeholder="name..."
         />
         <p>Game Price:</p>
         <input
           type="text"
           id="gamePrice"
-          v-model="this.productPrice"
+          v-model="putproductPrice"
           placeholder="price..."
         />
         <p>Game Genre</p>
@@ -166,10 +231,10 @@ export default {
           name="gameGenre"
           id="gameGenre"
           placeholder="genre 1, genre 2..."
-          v-model="productCategory"
+          v-model="putproductCategory"
         />
         <p>Game Platform</p>
-        <select id="gameCategory" name="gameCategory" v-model="pubPro">
+        <select id="gameCategory" name="gameCategory" v-model="putpubPro">
           <option value="1">Playstation</option>
           <option value="2">Xbox</option>
           <option value="3">Nintendo</option>
@@ -178,14 +243,6 @@ export default {
           <option value="6">GOG</option>
           <option value="7">IOS/Android</option>
         </select>
-        <p>Game id</p>
-        <input
-          type="text"
-          name="gameId"
-          id="gameId"
-          placeholder="product ID..."
-          v-model="productId"
-        />
         <p>
           <button onclick="putSubmit()">Send</button>
         </p>
@@ -194,59 +251,49 @@ export default {
     <!-- DELETE -->
     <div class="marginal">
       <form
-        action="http://localhost:3000/games/suggestions"
-        @submit.prevent="formSubmit"
+        action="http://localhost:3000/games/remove"
+        @submit.prevent="delSubmit"
         method="delete"
         id="gameForm"
       >
         <h1>DELETE</h1>
-        <p>Game Title:</p>
+        <p>Game id</p>
         <input
           type="text"
-          id="gameTitle"
-          v-model="productName"
-          placeholder="name..."
+          name="gameId"
+          id="gameId"
+          placeholder="product ID..."
+          v-model="delproductId"
         />
-        <p>Game Price:</p>
-        <input
-          type="text"
-          id="gamePrice"
-          v-model="this.productPrice"
-          placeholder="price..."
-        />
-        <p>Game Genre</p>
-        <input
-          type="text"
-          name="gameGenre"
-          id="gameGenre"
-          placeholder="genre 1, genre 2..."
-          v-model="productCategory"
-        />
-        <p>Game Platform</p>
-        <select id="gameCategory" name="gameCategory" v-model="pubPro">
-          <option value="1">Playstation</option>
-          <option value="2">Xbox</option>
-          <option value="3">Nintendo</option>
-          <option value="4">Steam</option>
-          <option value="5">Epic Game Store</option>
-          <option value="6">GOG</option>
-          <option value="7">IOS/Android</option>
-        </select>
+        <button style="margin-top: 170px" onclick="delSubmit()">Send</button>
       </form>
-    </div>
-    <!-- Side list -->
-    <div class="marginal-side">
-      <p style="text-align: center;" v-for="games in gamesContain" :title="games.productSerial">{{ games.productName }}
-      <hr />
-    </p>
     </div>
   </section>
 </template>
 
 <style scoped>
+.tablePlacement {
+  display: flex;
+  justify-content: center;
+}
+
+.tableHeight {
+  height: 200px;
+  border: inset 2px white;
+  overflow-y: auto;
+}
+
+h1 {
+  margin-top: 10px;
+}
+
+input {
+  border-radius: 5px;
+}
+
 #divide2 {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
   align-items: center;
 }
 .marginal {

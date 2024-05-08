@@ -1,13 +1,8 @@
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
 import HelloWorld from "./components/HelloWorld.vue";
-import cart from "./components/cart.vue";
-// import { ref, onMounted } from "vue";
 
-// onMounted(() => {
-//   const dialog = document.querySelector("dialog");
-//   dialog.close();
-// });
+import FooterComponent from "./views/FooterComponent.vue";
 </script>
 
 <template>
@@ -27,22 +22,25 @@ import cart from "./components/cart.vue";
 
       <nav>
         <div class="nav-links">
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/news">News</RouterLink>
-        <RouterLink to="/games">Games</RouterLink>
-        <RouterLink to="/games/suggestions">Game suggestion</RouterLink>
-        <RouterLink to="/orders">Orders & Stock</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-        <RouterLink to="/reviews">Reviews</RouterLink>
+          <RouterLink to="/">Home</RouterLink>
+          <RouterLink to="/news">News</RouterLink>
+          <RouterLink to="/games">Games</RouterLink>
+          <RouterLink to="/games/suggestions">Game suggestion</RouterLink>
+          <RouterLink to="/orders">Orders & Stock</RouterLink>
+          <RouterLink to="/about">About</RouterLink>
+          <RouterLink to="/reviews">Reviews</RouterLink>
         </div>
         <div>
-          <RouterLink to="/carts"><i class="fa-solid fa-cart-shopping" style="color: #a8aaad;"></i></RouterLink>
+          <RouterLink to="/carts"
+            ><i class="fa-solid fa-cart-shopping" style="color: #a8aaad"></i
+          ></RouterLink>
         </div>
       </nav>
     </div>
   </header>
 
   <RouterView />
+  <FooterComponent />
 </template>
 
 <style scoped>
