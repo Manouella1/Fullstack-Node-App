@@ -43,7 +43,7 @@ export default {
 
     fetchGames() {
       const fetched = [];
-      fetch("http://localhost:3000/games")
+      fetch("http://localhost:3000/api/games")
         .then((resp) => resp.json())
         .then((res) => {
           for (let i = 0; i < res.length; i++) {

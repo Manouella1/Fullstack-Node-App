@@ -4,14 +4,14 @@ const router = express.Router();
 const spelControl = require("../controllers/spelController");
 
 // Hämta alla spel
-router.get("/games", spelControl.getGames);
+router.get("/api/games", spelControl.getGames);
 // Hämta ett spel
-router.get("/games/:id", spelControl.getGame);
+router.get("/api/games/:id", spelControl.getGame);
 // Lägg till nytt spel
-router.post("/games/suggestions", spelControl.postGame);
+router.post("/api/games/insert", spelControl.postGame);
 // Ändra ett spel
-router.put("/games/edit", spelControl.putGame);
+router.put("/api/games/edit", spelControl.putGame);
 // Radera ett spel
-router.delete("/games", spelControl.delGame);
+router.delete("/api/games/remove", spelControl.delGame);
 
 module.exports = router;
