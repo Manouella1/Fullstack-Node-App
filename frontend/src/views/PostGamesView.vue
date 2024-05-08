@@ -191,7 +191,7 @@ export default {
           <option value="6">GOG</option>
           <option value="7">IOS/Android</option>
         </select>
-        <button onclick="formSubmit()">Send</button>
+        <button style="margin-top: 50px" onclick="formSubmit()">Send</button>
       </form>
     </div>
     <!-- PUT -->
@@ -265,7 +265,7 @@ export default {
           placeholder="product ID..."
           v-model="delproductId"
         />
-        <button onclick="delSubmit()">Send</button>
+        <button style="margin-top: 170px" onclick="delSubmit()">Send</button>
       </form>
     </div>
   </section>
