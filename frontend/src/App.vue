@@ -16,7 +16,9 @@ import FooterComponent from "./views/FooterComponent.vue";
     /> -->
 
     <div class="wrapper">
-      <HelloWorld msg="Hello and welcome to GameStore!" />
+      <!-- <HelloWorld msg="Hello and welcome to GameStore!" /> -->
+
+      <img src="./assets/misc/logo.png" alt="" />
 
       <cart />
 
