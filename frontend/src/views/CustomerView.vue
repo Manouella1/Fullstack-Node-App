@@ -1,7 +1,6 @@
 <script setup>
 import { ref } from "vue";
 import axios from "axios";
-// import { deleteCustomer } from "../../../backend/controllers/customerController";
 
 const customers = ref([]);
 const newCustomer = ref({
@@ -39,6 +38,7 @@ const registerCustomer = () => {
     .then((response) => {
       customers.value.push(response.data);
       console.log("Kund registrerad: ", response.data);
+      fetchCustomers();
     })
     .catch((error) => console.error("Error: ", error));
 };
@@ -51,7 +51,7 @@ const updateCustomer = () => {
   }
   axios
     .patch(
-      `http://localhost:3000/api/customers/${updateCustomerData.value.customerId}`,
+      `http://localhost:3000/patch/customers/${updateCustomerData.value.customerId}`,
       updateCustomerData.value
     )
     .then((response) => {
@@ -69,18 +69,26 @@ const deleteCustomer = (customerId) => {
     alert("Kund-ID krävs för radering.");
     return;
   }
+
+  // Börja axios-anropet direkt, och ta bort det felplacerade semikolon och punkten.
   axios
-    .delete(`http://localhost:3000/api/customers/${customerId}`)
+    .delete(`http://localhost:3000/delete/customers/${customerId}`)
     .then((response) => {
       console.log("Kund raderad: ", response.data);
+      // Antag att customers är en reaktiv referens i Vue eller liknande
       customers.value = customers.value.filter(
         (customer) => customer.customerId !== customerId
       );
     })
     .catch((error) => {
       console.error("Error: ", error);
-      console.error("Felmeddelande från server: ", error.response.data);
+      // Kontrollera felmeddelande från server, och hantera olika typer av fel
+      if (error.response) {
+        console.error("Felmeddelande från server: ", error.response.data);
+        alert(error.response.data.error);
+      }
     });
+  console.log("efter delete?");
 };
 </script>
 
@@ -119,7 +127,8 @@ const deleteCustomer = (customerId) => {
       <button @click="fetchCustomers">Hämta Kunder</button>
       <ul>
         <li v-for="customer in customers" :key="customer.customerId">
-          {{ customer.customerName }} - {{ customer.customerMail }}
+          {{ customer.customerName }} - {{ customer.customerMail }} -
+          {{ customer.customerAdress }}
           <button @click="deleteCustomer(customer.customerId)">Radera</button>
         </li>
       </ul>

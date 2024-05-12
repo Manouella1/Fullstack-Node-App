@@ -10,38 +10,31 @@ import axios from "axios";
 //
 
 const router = useRouter();
-
-const email = ref("");
-const password = ref("");
-const warningMessage = ref("");
 const current = ref(null);
 
-const validateAndNavigate = async () => {
-  if (!email.value.trim() || !password.value.trim()) {
-    warningMessage.value = "Invalid user";
-  } else {
-    const { data } = await axios.get(
-      "https://pb.nopatan.com/api/collections/user/records"
-    );
-    const user = data.items.find(
-      (u) => u.email === email.value && u.password === password.value
-    );
+const adminName = ref("");
+const adminPassword = ref("");
+const warningMessage = ref("");
 
-    if (user) {
-      // slippa logga in igen
-      localStorage.setItem("name", user.name);
-      router.push(`/online/${user.name}`); // När man har loggat in på sin profil så kommer man även se sitt nan efter online/
+const login = async () => {
+  warningMessage.value = ""; // Rensa tidigare varningar
+
+  try {
+    const response = await axios.post("http://localhost:3000/loginAdmin", {
+      adminName: adminName.value,
+      adminPassword: adminPassword.value,
+    });
+
+    localStorage.setItem("token", response.data.token); // Spara token
+    router.push("/dashboard"); // Navigera till dashboard
+  } catch (error) {
+    if (error.response && error.response.data) {
+      warningMessage.value = error.response.data.error;
     } else {
-      warningMessage.value = "Invalid user";
+      warningMessage.value = "Login failed due to server error.";
     }
   }
 };
-
-// Definierad PROPS
-defineProps({
-  emailPlaceholder: String,
-  required: true,
-});
 
 const focusField = (field) => {
   if (current.value) current.value.pause();
@@ -49,10 +42,10 @@ const focusField = (field) => {
   let strokeDashoffsetValue;
   let strokeDasharrayValue;
 
-  if (field === "email") {
+  if (field === "adminName") {
     strokeDashoffsetValue = 0;
     strokeDasharrayValue = "240 1386";
-  } else if (field === "password") {
+  } else if (field === "adminPassword") {
     strokeDashoffsetValue = -336;
     strokeDasharrayValue = "240 1386";
   } else if (field === "submit") {
@@ -74,7 +67,6 @@ const focusField = (field) => {
     },
   });
 };
-
 const navigateToRegister = () => {
   router.push({ name: "Register" }); // Använd ruttnamnet som definierats i din router konfiguration
 };
@@ -114,25 +106,26 @@ const navigateToRegister = () => {
           />
         </svg>
         <div class="form">
-          <label for="email">Email</label>
+          <label for="email">Admin</label>
 
           <!--tar emot string via props-->
           <input
-            v-model="email"
+            v-model="adminName"
             type="email"
             id="email"
-            :placeholder="emailPlaceholder"
-            @focus="focusField('email')"
+            :placeholder="Username"
+            required
+            @focus="focusField('adminName')"
           />
           <label for="password">Password</label>
           <input
-            v-model="password"
+            v-model="adminPassword"
             type="password"
             id="password"
-            @focus="focusField('password')"
+            @focus="focusField('adminPassword')"
           />
           <input
-            @click="validateAndNavigate"
+            @click="login"
             type="submit"
             id="submit"
             value="Log in"

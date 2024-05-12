@@ -59,4 +59,38 @@ exports.loginAdmin = async (req, res) => {
   }
 };
 
+// radera konto
+// DELETE en admin med verifiering
+exports.deleteAdmin = async (req, res) => {
+  const adminId = req.params.adminId; // Ändra från req.body till req.params
+  const { adminName, adminPassword } = req.body; // Fortsätt ta emot dessa från request body
+  console.log("nu försöker vi radera", adminId, adminName, adminPassword);
+
+  try {
+    const admin = await adminModel.findById(adminId);
+    if (!admin) {
+      return res.status(404).json({ error: "Admin hittades inte!" });
+    }
+
+    if (admin.adminName !== adminName) {
+      return res.status(401).json({ error: "Användarnamnet matchar inte!" });
+    }
+
+    const passwordMatch = await bcrypt.compare(
+      adminPassword,
+      admin.adminPassword
+    );
+    if (!passwordMatch) {
+      return res.status(401).json({ error: "Lösenordet är inte korrekt!" });
+    }
+
+    await adminModel.deleteOne({ _id: adminId });
+    res.status(200).json({ message: "Admin raderad framgångsrikt!" });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "Kunde inte radera admin: " + error.message });
+  }
+};
+
 // IF user är admin då skickar jag nytt message, i frontend: if message= admin = då visas annan komponent

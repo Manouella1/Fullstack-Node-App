@@ -9,8 +9,8 @@ router.get("/customers/:id", customerController.getCustomerById);
 
 router.post("/customer/register", customerController.registerCustomer);
 
-router.patch("/api/customers/:id", customerController.patchCustomer);
+router.patch("/patch/customers/:id", customerController.patchCustomer);
 
-router.delete("/api/customers/:id", customerController.deleteCustomer);
+router.delete("/delete/customers/:id", customerController.deleteCustomer);
 
 module.exports = router;

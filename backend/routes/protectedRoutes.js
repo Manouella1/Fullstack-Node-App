@@ -8,7 +8,5 @@ const adminController = require("../controllers/customerController");
 router.get("/admin", verifyToken, (req, res) => {
   res.status(200).json({ message: "Protected route accessed" });
 });
-// router.post("/loginAdmin", adminController.loginAdmin);
-// router.delete("/loginAdmin", verifyToken, adminController.loginAdmin);
 
 module.exports = router;

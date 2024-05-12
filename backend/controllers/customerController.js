@@ -89,7 +89,7 @@ exports.patchCustomer = async (req, res) => {
     id,
   ];
 
-  // Om man inte skrivit in ID vid PUT
+  // Om man inte skrivit in ID vid PATCH
   if (!id) {
     return res.status(400).json({
       success: false,
@@ -117,9 +117,10 @@ exports.patchCustomer = async (req, res) => {
 
 // // // DELETE ********
 exports.deleteCustomer = async (req, res) => {
-  // const { customerId } = req.body;
-  const customerId = req.params.id;
+  // const { customerId } = req.body
 
+  const customerId = req.params.id;
+  console.log("Deleting customer with ID:", customerId);
   // Vi använder Prepared Statements genom ? i SQL-koden och att ange paramatern i query-funktionen
   let sql = "DELETE FROM customers WHERE customerId = ?";
 
@@ -130,21 +131,37 @@ exports.deleteCustomer = async (req, res) => {
     });
   }
 
-  try {
-    await connectionMySQL.query(sql, [customerId], (error, results, fields) => {
-      if (error) {
-        if (error) throw error;
+  connectionMySQL.query(sql, [customerId], (error, results, fields) => {
+    if (error) {
+      console.error("Error during database operation:", error);
+      // Specifikt kontrollera SQL-felkoder relaterade till främmande nyckelbegränsningar
+      if (
+        error.code === "ER_ROW_IS_REFERENCED_2" ||
+        error.code === "ER_ROW_IS_REFERENCED"
+      ) {
+        return res.status(409).json({
+          success: false,
+          error:
+            "Kunden kan inte raderas eftersom den finns med i en eller flera ordrar.",
+        });
+      } else {
+        return res.status(500).json({
+          success: false,
+          error: "Ett oväntat fel inträffade.",
+        });
       }
-      return res.status(201).json({
-        success: true,
-        error: "",
-        message: "kunden är nu raderad!",
+    }
+
+    if (results.affectedRows === 0) {
+      return res.status(404).json({
+        success: false,
+        error: "Kunden hittades inte.",
       });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Kunden har raderats framgångsrikt.",
     });
-  } catch (error) {
-    return res.status(500).json({
-      success: false,
-      error: error.message,
-    });
-  }
+  });
 };

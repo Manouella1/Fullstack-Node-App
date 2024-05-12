@@ -8,4 +8,6 @@ router.post("/loginAdmin", adminController.loginAdmin);
 router.get("/admin", adminController.getAdmin);
 // router.delete("/deleteAdmin", adminController.loginAdmin);
 
+router.delete("/deleteAdmin/:adminId", adminController.deleteAdmin);
+
 module.exports = router;
